@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const Bla = () => {
-  return (
-    <div>
-      swsw
-    </div>
-  )
-}
+const Bla = (props) => {
+  return <div>{props.match.params.id}</div>;
+};
 
-export default Bla
+export default Bla;
