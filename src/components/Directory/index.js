@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MenuItem from "../Menu-item";
-import "../../sass/directory.scss";
+import "./directory.scss";
 
 class index extends Component {
   state = {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import shopData from "./shopData";
-import PreviewCollection from "../previewCollection";
+import PreviewCollection from "../PreviewCollection";
 
 export class Shop extends Component {
   state = {
