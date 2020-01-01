@@ -52,7 +52,7 @@ class signUp extends Component {
     const { displayName, email, password, confirmPassword } = this.state;
 
     return (
-      <div className="signup">
+      <div className="sign-up">
         <h2 className="title">I do not have an account</h2>
         <h4>Sign up with your email and password</h4>
         <form className="sign-up-form" onSubmit={this.onSubmitForm}>

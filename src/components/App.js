@@ -8,6 +8,9 @@ import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Shop from "../pages/Shop";
 import SigninSignUp from "../pages/SigninSignup";
+
+import { connect } from "react-redux";
+import { SetCurrentUser } from "../actions/user";
 import { auth, createUserProfileDocument } from "../Firebase/Firebase-utils";
 
 class App extends Component {
@@ -18,21 +21,20 @@ class App extends Component {
   unsubscribeFromAuth = null;
 
   componentDidMount = () => {
+    const { SetCurrentUser } = this.props;
+
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
         userRef.onSnapshot(snapShot => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data()
-            }
+          SetCurrentUser({
+            id: snapShot.id,
+            ...snapShot.data()
           });
-          console.log(this.state);
         });
       }
-      this.setState({ currentUser: userAuth });
+      SetCurrentUser({ currentUser: userAuth });
     });
   };
 
@@ -43,7 +45,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Layout currentUser={this.state.currentUser}>
+        <Layout>
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/about" exact component={About} />
@@ -57,4 +59,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, { SetCurrentUser })(App);

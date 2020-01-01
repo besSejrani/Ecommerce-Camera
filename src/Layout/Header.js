@@ -2,6 +2,7 @@ import React from "react";
 import "./header.scss";
 
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { auth } from "../Firebase/Firebase-utils";
 
 const Header = ({ currentUser }) => {
@@ -32,4 +33,8 @@ const Header = ({ currentUser }) => {
   );
 };
 
-export default Header;
+const mapState = state => ({
+  currentUser: state.user.currentUser
+});
+
+export default connect(mapState)(Header);

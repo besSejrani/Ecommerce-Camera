@@ -42,7 +42,7 @@ class index extends Component {
 
   renderProducts = () => {
     return this.state.section.map(({ id, ...section }) => {
-      return <MenuItem id={id} {...section} />;
+      return <MenuItem key={id} {...section} />;
     });
   };
 
