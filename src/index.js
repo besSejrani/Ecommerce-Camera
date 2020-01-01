@@ -8,7 +8,6 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 
 import reduxThunk from "redux-thunk";
-import reduxLogger from "redux-logger";
 
 let composeEnhancers;
 
@@ -20,7 +19,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const store = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(reduxThunk, reduxLogger))
+  composeEnhancers(applyMiddleware(reduxThunk))
 );
 
 ReactDOM.render(
