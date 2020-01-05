@@ -1,15 +1,48 @@
-import { createStore, applyMiddleware } from "redux";
-import logger from "redux-logger";
-import { persistStore } from "redux-persist";
+import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./root-reducer";
 
-const middlewares = [];
+import { persistStore } from "redux-persist";
+import reduxSaga from "redux-saga";
+import rootSaga from "./root-saga";
 
-if (process.env.NODE_ENV === "development") {
-  middlewares.push(logger);
+const sagaMiddleware = reduxSaga();
+
+/**
+|--------------------------------------------------
+| EXPLANATION :
+| 
+| Only show the redux-devtools in developpement. 
+|--------------------------------------------------
+*/
+let composeEnhancers;
+
+if (process.env.NODE_ENV !== "production") {
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+} else {
+  composeEnhancers = null || compose;
 }
 
-export const store = createStore(rootReducer, applyMiddleware(...middlewares));
+/**
+|--------------------------------------------------
+| EXPLANATION :
+| 
+| Passing the following data to the index.js file
+| in the root
+|--------------------------------------------------
+*/
+export const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(sagaMiddleware))
+);
+
 export const persistor = persistStore(store);
 
-export default { store, persistor };
+/**
+|--------------------------------------------------
+| REDUX-SAGA : 
+| 
+| Redux-saga need to be run and executed after it
+| it was added to the middlewares.
+|--------------------------------------------------
+*/
+sagaMiddleware.run(rootSaga);
